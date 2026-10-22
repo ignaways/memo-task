@@ -1,0 +1,13 @@
+name: memo-board-web
+
+services:
+  web:
+    build:
+      context: .
+      args:
+        VITE_API_URL: ${VITE_API_URL:-http://localhost:4000}
+        VITE_DEMO_EMAIL: ${VITE_DEMO_EMAIL:-}
+        VITE_DEMO_PASSWORD: ${VITE_DEMO_PASSWORD:-}
+    ports:
+      - "8080:80"
+    restart: unless-stopped
