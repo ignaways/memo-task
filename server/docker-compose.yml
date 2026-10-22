@@ -1,4 +1,4 @@
-name: memo-board-api
+name: memo-task
 
 services:
   db:
@@ -9,7 +9,7 @@ services:
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-memo_password}
       POSTGRES_DB: ${POSTGRES_DB:-memo_board}
     ports:
-      - "5432:5432"
+      - "5434:5432"
     volumes:
       - pgdata:/var/lib/postgresql/data
       - ./docker/init-test-db.sql:/docker-entrypoint-initdb.d/init-test-db.sql:ro
@@ -28,7 +28,7 @@ services:
       DATABASE_URL: postgresql://${POSTGRES_USER:-memo}:${POSTGRES_PASSWORD:-memo_password}@db:5432/${POSTGRES_DB:-memo_board}
       DATABASE_SSL: "false"
     ports:
-      - "${PORT:-4000}:4000"
+      - "${PORT:-4100}:4000"
     depends_on:
       db:
         condition: service_healthy
