@@ -10,11 +10,9 @@ services:
       - key: NODE_ENV
         value: production
       - key: DATABASE_URL
-        fromDatabase:
-          name: memo-board-db
-          property: connectionString
+        sync: false
       - key: DATABASE_SSL
-        value: "false"
+        value: "true"
       - key: JWT_SECRET
         generateValue: true
       - key: JWT_EXPIRES_IN
