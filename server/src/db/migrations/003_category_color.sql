@@ -1,0 +1,1 @@
+ALTER TABLE categories ADD COLUMN color VARCHAR(7) NOT NULL DEFAULT '#f59e0b';

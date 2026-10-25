@@ -22,17 +22,17 @@ export default function Column({
     <section
       aria-label={column.title}
       className={`flex min-h-96 flex-col rounded-2xl p-3 transition duration-200 ${
-        isHighlighted ? `${column.soft} ring-2 ${column.ring}` : "bg-slate-100"
+        isHighlighted ? `${column.soft} ring-2 ${column.ring}` : "bg-stone-100"
       }`}
     >
       <header className="mb-3 flex items-center justify-between px-1">
         <div className="flex items-center gap-2">
           <span className={`h-2.5 w-2.5 rounded-full ${column.dot}`} />
-          <h2 className="text-sm font-semibold text-slate-800">{column.title}</h2>
+          <h2 className="text-sm font-semibold text-stone-800">{column.title}</h2>
         </div>
         <span
           key={tasks.length}
-          className="animate-pop-in rounded-md bg-white px-2 py-0.5 text-xs font-medium text-slate-500"
+          className="animate-pop-in rounded-md bg-white px-2 py-0.5 text-xs font-medium text-stone-500"
         >
           {tasks.length}
         </span>

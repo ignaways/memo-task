@@ -5,7 +5,7 @@ const STYLES = {
   overdue: "bg-red-50 text-red-700",
   today: "bg-amber-50 text-amber-700",
   soon: "bg-amber-50 text-amber-700",
-  upcoming: "bg-slate-100 text-slate-600",
+  upcoming: "bg-stone-100 text-stone-600",
   done: "bg-emerald-50 text-emerald-700",
 };
 

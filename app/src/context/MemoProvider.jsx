@@ -84,6 +84,31 @@ export default function MemoProvider({ children }) {
     [toast]
   );
 
+  const updateCategory = useCallback(
+    async (id, data) => {
+      const category = await categoryService.update(id, data);
+      setCategories((prev) => prev.map((item) => (item.id === id ? category : item)));
+      toast.success(`Kategori "${category.name}" diperbarui.`);
+      return category;
+    },
+    [toast]
+  );
+
+  const deleteCategory = useCallback(
+    async (id) => {
+      const category = categories.find((item) => item.id === id);
+      await categoryService.remove(id);
+      setCategories((prev) => prev.filter((item) => item.id !== id));
+      setTasks((prev) => prev.filter((task) => task.categoryId !== id));
+      setTaskLoad((prev) => {
+        const { [id]: _removed, ...rest } = prev;
+        return rest;
+      });
+      toast.success(`Kategori "${category?.name ?? ""}" dihapus.`);
+    },
+    [categories, toast]
+  );
+
   const addTask = useCallback(async (categoryId, data) => {
     const task = await taskService.create(categoryId, data);
     setTasks((prev) => [...prev, task]);
@@ -173,6 +198,8 @@ export default function MemoProvider({ children }) {
       loadTasks,
       getCategory,
       addCategory,
+      updateCategory,
+      deleteCategory,
       addTask,
       updateTask,
       deleteTask,
@@ -190,6 +217,8 @@ export default function MemoProvider({ children }) {
       loadTasks,
       getCategory,
       addCategory,
+      updateCategory,
+      deleteCategory,
       addTask,
       updateTask,
       deleteTask,

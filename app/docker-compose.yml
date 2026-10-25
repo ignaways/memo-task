@@ -1,11 +1,11 @@
-name: memo-board-web
+name: memo-task-web
 
 services:
   web:
     build:
       context: .
       args:
-        VITE_API_URL: ${VITE_API_URL:-http://localhost:4000}
+        VITE_API_URL: ${VITE_API_URL:-http://localhost:4100}
         VITE_DEMO_EMAIL: ${VITE_DEMO_EMAIL:-}
         VITE_DEMO_PASSWORD: ${VITE_DEMO_PASSWORD:-}
     ports:

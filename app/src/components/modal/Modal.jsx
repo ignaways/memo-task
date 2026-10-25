@@ -29,7 +29,7 @@ export default function Modal({ open, onClose, title, subtitle, size = "md", chi
 
   return (
     <div className="fixed inset-0 z-50 overflow-y-auto">
-      <div className="animate-fade-in fixed inset-0 bg-slate-900/50" onClick={onClose} />
+      <div className="animate-fade-in fixed inset-0 bg-stone-900/50" onClick={onClose} />
       <div className="flex min-h-full items-center justify-center p-4">
         <div
           role="dialog"
@@ -39,10 +39,10 @@ export default function Modal({ open, onClose, title, subtitle, size = "md", chi
         >
           <div className="flex items-start justify-between gap-4">
             <div>
-              <h2 id="modal-title" className="text-lg font-semibold text-slate-900">
+              <h2 id="modal-title" className="text-lg font-semibold text-stone-900">
                 {title}
               </h2>
-              {subtitle && <p className="mt-1 text-sm text-slate-500">{subtitle}</p>}
+              {subtitle && <p className="mt-1 text-sm text-stone-500">{subtitle}</p>}
             </div>
             <IconButton onClick={onClose} aria-label="Tutup">
               <CloseIcon size={18} />

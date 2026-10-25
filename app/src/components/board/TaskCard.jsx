@@ -11,8 +11,8 @@ const noop = () => {};
 const getStateClass = ({ isOverlay, isPlaceholder, isRemoving, isEntering }) => {
   if (isOverlay) return "cursor-grabbing border-primary-200 shadow-2xl shadow-primary-900/20 animate-lift";
   if (isPlaceholder) return "border-dashed border-primary-300 bg-primary-50 shadow-none";
-  if (isRemoving) return "pointer-events-none border-slate-200 animate-card-out";
-  return `cursor-grab border-slate-200 shadow-sm hover:border-slate-300 hover:shadow-md ${isEntering ? "animate-card-in" : ""}`;
+  if (isRemoving) return "pointer-events-none border-stone-200 animate-card-out";
+  return `cursor-grab border-stone-200 shadow-sm hover:border-stone-300 hover:shadow-md ${isEntering ? "animate-card-in" : ""}`;
 };
 
 export default function TaskCard({
@@ -41,7 +41,7 @@ export default function TaskCard({
       style={style}
       {...dragProps}
       onAnimationEnd={onAnimationEnd}
-      className={`group relative touch-manipulation select-none rounded-xl border bg-white p-4 transition-[box-shadow,border-color] focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-400 ${getStateClass(
+      className={`group relative touch-manipulation select-none rounded-xl border bg-white p-4 transition-[box-shadow,border-color] focus:outline-none focus-visible:ring-2 focus-visible:ring-secondary-400 ${getStateClass(
         { isOverlay, isPlaceholder, isRemoving, isEntering }
       )}`}
     >
@@ -59,15 +59,15 @@ export default function TaskCard({
         </div>
 
         <h3
-          className={`mt-2 text-sm font-semibold leading-snug text-slate-900 ${
-            isComplete ? "line-through decoration-slate-400" : ""
+          className={`mt-2 text-sm font-semibold leading-snug text-stone-900 ${
+            isComplete ? "line-through decoration-stone-400" : ""
           }`}
         >
           {task.title}
         </h3>
 
         {task.description && (
-          <p className="mt-1.5 line-clamp-3 whitespace-pre-line text-sm leading-relaxed text-slate-600">
+          <p className="mt-1.5 line-clamp-3 whitespace-pre-line text-sm leading-relaxed text-stone-600">
             {task.description}
           </p>
         )}

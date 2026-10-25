@@ -19,6 +19,8 @@ const CATEGORIES = [
   {
     name: "Perkuliahan",
     description: "Task perkuliahan semester ganjil 2026/2027",
+    icon: "book",
+    color: "#f59e0b",
     tasks: [
       {
         title: "Tugas makalah Basis Data",
@@ -68,6 +70,8 @@ const CATEGORIES = [
   {
     name: "Deadline",
     description: "Deadline kerjaan bulan Oktober",
+    icon: "briefcase",
+    color: "#0ea5e9",
     tasks: [
       {
         title: "Refactor modul autentikasi",
@@ -123,8 +127,8 @@ const seed = async () => {
 
     for (const category of CATEGORIES) {
       const created = await db.query(
-        "INSERT INTO categories (user_id, name, description) VALUES ($1, $2, $3) RETURNING id",
-        [userId, category.name, category.description]
+        "INSERT INTO categories (user_id, name, description, icon, color) VALUES ($1, $2, $3, $4, $5) RETURNING id",
+        [userId, category.name, category.description, category.icon, category.color]
       );
       const categoryId = created.rows[0].id;
       const positions = {};

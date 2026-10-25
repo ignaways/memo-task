@@ -10,7 +10,7 @@ export default function PriorityIcon({ priority }) {
       {LEVELS.map((bar) => (
         <span
           key={bar}
-          className={`w-1 rounded-sm ${bar <= level ? color : "bg-slate-200"}`}
+          className={`w-1 rounded-sm ${bar <= level ? color : "bg-stone-200"}`}
           style={{ height: `${3 + bar * 3.5}px` }}
         />
       ))}

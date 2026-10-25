@@ -81,7 +81,7 @@ export default function CategoryBoard({ category }) {
     <>
       <Link
         to="/"
-        className="mb-4 inline-flex items-center gap-1.5 rounded text-sm font-medium text-slate-500 transition hover:text-primary-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-400"
+        className="mb-4 inline-flex items-center gap-1.5 rounded text-sm font-medium text-stone-500 transition hover:text-primary-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-secondary-400"
       >
         <ArrowLeftIcon />
         Kembali ke Category

@@ -1,0 +1,1 @@
+ALTER TABLE categories ADD COLUMN icon VARCHAR(30) NOT NULL DEFAULT 'book';

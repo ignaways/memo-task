@@ -1,10 +1,15 @@
-export default function CategoryListSkeleton({ count = 2 }) {
+export default function CategoryListSkeleton({ count = 3 }) {
   return (
-    <ul className="space-y-4" aria-hidden="true">
+    <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3" aria-hidden="true">
       {Array.from({ length: count }, (_, index) => (
-        <li key={index} className="animate-pulse rounded-xl border border-slate-100 bg-white px-5 py-4 shadow-md shadow-slate-200/70">
-          <div className="h-5 w-40 rounded bg-slate-200" />
-          <div className="mt-2 h-3.5 w-64 max-w-full rounded bg-slate-100" />
+        <li key={index} className="animate-pulse rounded-xl border border-stone-100 bg-white p-5 shadow-md shadow-stone-200/70">
+          <div className="h-11 w-11 rounded-lg bg-stone-200" />
+          <div className="mt-3 h-5 w-36 rounded bg-stone-200" />
+          <div className="mt-2 h-3.5 w-full rounded bg-stone-100" />
+          <div className="mt-5 flex items-center justify-between">
+            <div className="h-4 w-28 rounded bg-stone-100" />
+            <div className="h-8 w-16 rounded-lg bg-stone-200" />
+          </div>
         </li>
       ))}
     </ul>

@@ -35,6 +35,8 @@ describe("Categories", () => {
     assert.equal(created.status, 201);
     assert.equal(created.body.data.name, "Perkuliahan");
     assert.equal(created.body.data.taskCount, 0);
+    assert.equal(created.body.data.icon, "book");
+    assert.equal(created.body.data.color, "#f59e0b");
     categoryId = created.body.data.id;
 
     const list = await api(owner.token).get("/api/categories");
@@ -46,6 +48,24 @@ describe("Categories", () => {
     assert.equal((await api(stranger.token).get(`/api/categories/${categoryId}`)).status, 404);
     assert.equal((await api(stranger.token).patch(`/api/categories/${categoryId}`, { name: "Hack" })).status, 404);
     assert.equal((await api(stranger.token).get(`/api/categories/${categoryId}/tasks`)).status, 404);
+  });
+
+  test("mengubah ikon dan warna kategori", async () => {
+    const updated = await api(owner.token).patch(`/api/categories/${categoryId}`, { icon: "code", color: "#0EA5E9" });
+    assert.equal(updated.status, 200);
+    assert.equal(updated.body.data.icon, "code");
+    assert.equal(updated.body.data.color, "#0ea5e9");
+
+    const emoji = await api(owner.token).patch(`/api/categories/${categoryId}`, { icon: "👨‍💻" });
+    assert.equal(emoji.status, 200);
+    assert.equal(emoji.body.data.icon, "👨‍💻");
+  });
+
+  test("menolak ikon dan warna yang tidak valid", async () => {
+    for (const body of [{ icon: "roket" }, { icon: "🚀🚀" }, { icon: "a" }, { color: "amber" }, { color: "#fff" }]) {
+      const res = await api(owner.token).post("/api/categories", { name: "Lain", ...body });
+      assert.equal(res.status, 400, JSON.stringify(body));
+    }
   });
 
   test("ID tidak valid ditolak dengan 400", async () => {

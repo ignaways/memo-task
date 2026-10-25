@@ -70,6 +70,8 @@ Endpoint `DELETE` yang berhasil mengembalikan `204 No Content` tanpa body.
   "id": "b2a1f0c4-8d1e-4c9a-a6f2-3e4d5c6b7a81",
   "name": "Perkuliahan",
   "description": "Task perkuliahan semester ganjil 2026/2027",
+  "icon": "book",
+  "color": "#f59e0b",
   "taskCount": 4,
   "createdAt": "2026-10-22T07:30:00.000Z",
   "updatedAt": "2026-10-22T07:30:00.000Z"
@@ -161,13 +163,15 @@ Response `200` berisi array Category, diurutkan dari yang paling lama dibuat.
 ### `POST /categories`
 
 ```json
-{ "name": "Perkuliahan", "description": "Semester ganjil" }
+{ "name": "Perkuliahan", "description": "Semester ganjil", "icon": "book", "color": "#f59e0b" }
 ```
 
 | Field | Aturan |
 | --- | --- |
 | `name` | Wajib, 1 sampai 80 karakter |
 | `description` | Opsional, maksimal 200 karakter |
+| `icon` | Opsional. Kunci ikon dari `CATEGORY_ICONS` di `categories.schema.js` (misalnya `book`, `code`, `rocket`), atau satu emoji sebagai ikon custom. Default `book` |
+| `color` | Opsional. Warna hex 6 digit, misalnya `#f59e0b`. Disimpan dalam huruf kecil. Default `#f59e0b` |
 
 Response `201` berisi Category.
 
@@ -177,7 +181,7 @@ Response `200` berisi Category. Error: `400 VALIDATION_ERROR` jika ID bukan UUID
 
 ### `PATCH /categories/:categoryId`
 
-Kirim satu atau kedua field `name` dan `description`. Response `200` berisi Category terbaru.
+Kirim minimal satu dari field `name`, `description`, `icon`, dan `color`. Response `200` berisi Category terbaru.
 
 ### `DELETE /categories/:categoryId`
 

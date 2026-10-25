@@ -27,7 +27,7 @@ export default function TagInput({ id, tags, onChange, suggestions = [] }) {
 
   return (
     <div>
-      <div className="flex flex-wrap items-center gap-1.5 rounded-lg border border-slate-300 px-2 py-1.5 transition focus-within:border-primary-500 focus-within:ring-2 focus-within:ring-primary-200">
+      <div className="flex flex-wrap items-center gap-1.5 rounded-lg border border-stone-300 px-2 py-1.5 transition focus-within:border-primary-500 focus-within:ring-2 focus-within:ring-primary-200">
         {tags.map((tag) => (
           <TagChip key={tag} tag={tag} onRemove={removeTag} />
         ))}
@@ -38,7 +38,7 @@ export default function TagInput({ id, tags, onChange, suggestions = [] }) {
           onKeyDown={handleKeyDown}
           onBlur={() => value && addTag(value)}
           placeholder={tags.length ? "" : "Ketik tag lalu tekan Enter"}
-          className="min-w-24 flex-1 bg-transparent px-1 py-0.5 text-sm text-slate-900 outline-none"
+          className="min-w-24 flex-1 bg-transparent px-1 py-0.5 text-sm text-stone-900 outline-none"
         />
       </div>
 
@@ -49,7 +49,7 @@ export default function TagInput({ id, tags, onChange, suggestions = [] }) {
               key={tag}
               type="button"
               onClick={() => addTag(tag)}
-              className="rounded-md border border-dashed border-slate-300 px-2 py-0.5 text-xs text-slate-500 hover:border-primary-400 hover:text-primary-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-400"
+              className="rounded-md border border-dashed border-stone-300 px-2 py-0.5 text-xs text-stone-500 hover:border-primary-400 hover:text-primary-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-secondary-400"
             >
               + {tag}
             </button>

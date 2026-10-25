@@ -1,14 +1,14 @@
 export default function ProgressBar({ done, total, percent }) {
   return (
     <div className="mt-8">
-      <div className="flex items-center justify-between text-xs font-medium text-slate-500">
+      <div className="flex items-center justify-between text-xs font-medium text-stone-500">
         <span>
           {done} dari {total} task selesai
         </span>
         <span>{percent}%</span>
       </div>
       <div
-        className="mt-2 h-1.5 w-full overflow-hidden rounded-full bg-slate-100"
+        className="mt-2 h-1.5 w-full overflow-hidden rounded-full bg-stone-100"
         role="progressbar"
         aria-valuenow={percent}
         aria-valuemin={0}

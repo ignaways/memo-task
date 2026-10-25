@@ -20,7 +20,7 @@ const validate = ({ name, email, password, confirmPassword }) => {
   return errors;
 };
 
-const linkClass = "rounded font-semibold text-primary-700 hover:underline focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-400";
+const linkClass = "rounded font-semibold text-primary-700 hover:underline focus:outline-none focus-visible:ring-2 focus-visible:ring-secondary-400";
 
 export default function RegisterPage() {
   const { register } = useAuth();

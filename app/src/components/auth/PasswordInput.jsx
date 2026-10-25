@@ -11,7 +11,7 @@ export default function PasswordInput({ className = "", ...props }) {
         type="button"
         onClick={() => setVisible((prev) => !prev)}
         aria-pressed={visible}
-        className="absolute inset-y-0 right-2 my-auto h-7 rounded px-2 text-xs font-medium text-slate-500 hover:text-primary-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-400"
+        className="absolute inset-y-0 right-2 my-auto h-7 rounded px-2 text-xs font-medium text-stone-500 hover:text-primary-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-secondary-400"
       >
         {visible ? "Sembunyikan" : "Lihat"}
       </button>

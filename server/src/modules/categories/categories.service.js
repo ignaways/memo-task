@@ -5,6 +5,8 @@ const toCategory = (row) => ({
   id: row.id,
   name: row.name,
   description: row.description,
+  icon: row.icon,
+  color: row.color,
   taskCount: row.task_count ?? 0,
   createdAt: row.created_at,
   updatedAt: row.updated_at,
@@ -38,10 +40,10 @@ export const getById = async (userId, categoryId) => {
   return toCategory(rows[0]);
 };
 
-export const create = async (userId, { name, description }) => {
+export const create = async (userId, { name, description, icon, color }) => {
   const { rows } = await query(
-    "INSERT INTO categories (user_id, name, description) VALUES ($1, $2, $3) RETURNING *",
-    [userId, name, description]
+    "INSERT INTO categories (user_id, name, description, icon, color) VALUES ($1, $2, $3, $4, $5) RETURNING *",
+    [userId, name, description, icon, color]
   );
   return toCategory(rows[0]);
 };
@@ -51,10 +53,12 @@ export const update = async (userId, categoryId, changes) => {
     `UPDATE categories
      SET name = COALESCE($3, name),
          description = COALESCE($4, description),
+         icon = COALESCE($5, icon),
+         color = COALESCE($6, color),
          updated_at = now()
      WHERE id = $1 AND user_id = $2
      RETURNING id`,
-    [categoryId, userId, changes.name ?? null, changes.description ?? null]
+    [categoryId, userId, changes.name ?? null, changes.description ?? null, changes.icon ?? null, changes.color ?? null]
   );
   if (!rows[0]) throw AppError.notFound("Kategori tidak ditemukan.", "CATEGORY_NOT_FOUND");
   return getById(userId, categoryId);

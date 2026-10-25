@@ -25,6 +25,8 @@ erDiagram
         uuid user_id FK
         varchar name
         varchar description
+        varchar icon
+        varchar color
         timestamptz created_at
         timestamptz updated_at
     }
@@ -63,6 +65,8 @@ Menyimpan akun. Password disimpan sebagai hash bcrypt, tidak pernah dalam bentuk
 ### `categories`
 
 Setiap kategori dimiliki satu user. Menghapus user akan menghapus seluruh kategorinya (`ON DELETE CASCADE`).
+
+Kolom `icon` menyimpan kunci ikon (default `book`) atau satu emoji sebagai ikon custom. Daftar kunci yang diizinkan divalidasi di aplikasi (`CATEGORY_ICONS` di `categories.schema.js`), bukan dengan `CHECK` constraint, supaya menambah ikon baru tidak perlu migrasi. Kolom `color` menyimpan warna hex 6 digit dalam huruf kecil (default `#f59e0b`).
 
 ### `tasks`
 
@@ -111,7 +115,7 @@ Saat task diedit dan field `checklist` dikirim, server menghapus semua item lama
 
 ## Menambah Migrasi Baru
 
-1. Buat file baru di `src/db/migrations/` dengan nomor urut berikutnya, misalnya `002_add_category_color.sql`.
+1. Buat file baru di `src/db/migrations/` dengan nomor urut berikutnya, misalnya `004_add_task_reminder.sql`.
 2. Tulis perubahan skemanya. Jangan mengubah file migrasi yang sudah pernah diterapkan.
 3. Jalankan `npm run migrate`, atau restart container API.
 

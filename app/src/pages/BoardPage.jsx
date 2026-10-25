@@ -18,7 +18,7 @@ export default function BoardPage() {
   if (!category && categoriesStatus !== LOAD_STATUS.READY) {
     return (
       <div aria-busy="true">
-        <div className="h-8 w-48 animate-pulse rounded bg-slate-200" />
+        <div className="h-8 w-48 animate-pulse rounded bg-stone-200" />
         <BoardSkeleton />
       </div>
     );

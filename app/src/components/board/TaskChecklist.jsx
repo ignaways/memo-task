@@ -11,8 +11,8 @@ export default function TaskChecklist({ items, onToggle }) {
   const hiddenCount = items.length - PREVIEW_LIMIT;
 
   return (
-    <div className="mt-3 rounded-lg bg-slate-50 p-2.5">
-      <div className="flex items-center justify-between text-xs font-medium text-slate-600">
+    <div className="mt-3 rounded-lg bg-stone-50 p-2.5">
+      <div className="flex items-center justify-between text-xs font-medium text-stone-600">
         <span className="inline-flex items-center gap-1">
           <ChecklistIcon />
           Checklist
@@ -22,7 +22,7 @@ export default function TaskChecklist({ items, onToggle }) {
         </span>
       </div>
 
-      <div className="mt-1.5 h-1 overflow-hidden rounded-full bg-slate-200">
+      <div className="mt-1.5 h-1 overflow-hidden rounded-full bg-stone-200">
         <div className="h-full rounded-full bg-emerald-500 transition-all" style={{ width: `${percent}%` }} />
       </div>
 
@@ -36,7 +36,7 @@ export default function TaskChecklist({ items, onToggle }) {
                 onChange={() => onToggle(item.id)}
                 className="mt-0.5 h-4 w-4 shrink-0 accent-primary-700"
               />
-              <span className={item.done ? "text-slate-400 line-through" : "text-slate-700"}>{item.text}</span>
+              <span className={item.done ? "text-stone-400 line-through" : "text-stone-700"}>{item.text}</span>
             </label>
           </li>
         ))}
@@ -46,7 +46,7 @@ export default function TaskChecklist({ items, onToggle }) {
         <button
           type="button"
           onClick={() => setExpanded((prev) => !prev)}
-          className="mt-1.5 rounded text-xs font-medium text-primary-700 hover:underline focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-400"
+          className="mt-1.5 rounded text-xs font-medium text-primary-700 hover:underline focus:outline-none focus-visible:ring-2 focus-visible:ring-secondary-400"
         >
           {expanded ? "Sembunyikan" : `Lihat ${hiddenCount} lainnya`}
         </button>

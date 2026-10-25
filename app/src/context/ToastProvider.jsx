@@ -57,12 +57,12 @@ export default function ToastProvider({ children }) {
             className={`animate-pop-in pointer-events-auto flex w-full max-w-sm items-start gap-3 rounded-xl border px-4 py-3 text-sm shadow-lg ${VARIANTS[toast.variant]}`}
           >
             <span className={`mt-1.5 h-2 w-2 shrink-0 rounded-full ${DOTS[toast.variant]}`} />
-            <p className="flex-1 text-slate-700">{toast.message}</p>
+            <p className="flex-1 text-stone-700">{toast.message}</p>
             <button
               type="button"
               onClick={() => dismiss(toast.id)}
               aria-label="Tutup notifikasi"
-              className="rounded p-0.5 text-slate-400 hover:text-slate-600 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-400"
+              className="rounded p-0.5 text-stone-400 hover:text-stone-600 focus:outline-none focus-visible:ring-2 focus-visible:ring-secondary-400"
             >
               <CloseIcon />
             </button>

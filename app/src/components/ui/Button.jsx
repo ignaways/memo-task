@@ -1,8 +1,9 @@
 const VARIANTS = {
   primary:
-    "bg-primary-800 text-white shadow-sm hover:bg-primary-900 focus-visible:ring-primary-400 focus-visible:ring-offset-2",
-  ghost: "text-slate-600 hover:bg-slate-100 focus-visible:ring-slate-400",
-  outline: "border border-slate-300 bg-white text-slate-700 hover:border-slate-400 focus-visible:ring-primary-400",
+    "bg-primary-800 text-white shadow-sm hover:bg-primary-900 focus-visible:ring-secondary-400 focus-visible:ring-offset-2",
+  ghost: "text-stone-600 hover:bg-stone-100 focus-visible:ring-stone-400",
+  outline: "border border-stone-300 bg-white text-stone-700 hover:border-stone-400 focus-visible:ring-secondary-400",
+  danger: "bg-rose-600 text-white shadow-sm hover:bg-rose-700 focus-visible:ring-rose-400 focus-visible:ring-offset-2",
 };
 
 const SIZES = {
