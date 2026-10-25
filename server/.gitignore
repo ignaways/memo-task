@@ -4,3 +4,5 @@ node_modules
 *.log
 .DS_Store
 coverage
+.env.example
+.env.test.example
