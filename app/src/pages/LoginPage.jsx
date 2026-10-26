@@ -53,16 +53,31 @@ export default function LoginPage() {
     submit({ email: form.email.trim(), password: form.password });
   };
 
+  const handleDemoAccount = () => {
+    setForm((prev) => ({
+      "email": "demo@memoboard.dev",
+      "password": "demo12345"
+    }))
+  }
+
   return (
     <AuthCard
       title="Masuk"
       subtitle="Lanjutkan mengelola task kamu."
       footer={
         <>
-          Belum punya akun?{" "}
-          <Link to="/register" className={linkClass}>
-            Daftar sekarang
-          </Link>
+          <div>
+            Belum punya akun?{" "}
+            <Link to="/register" className={linkClass}>
+              Daftar sekarang
+            </Link>
+          </div>
+          <div>
+            Atau gunakan{" "}
+            <span className={linkClass} onClick={handleDemoAccount}>
+              akun demo
+            </span>
+          </div>
         </>
       }
     >
