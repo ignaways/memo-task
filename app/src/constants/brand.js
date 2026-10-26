@@ -1,11 +1,11 @@
 export const BRAND = {
   name: "Ignatius Andri",
   role: "Fullstack Developer",
-  tagline: "Membangun aplikasi web yang rapi, cepat, dan mudah digunakan.",
-  email: "email@domain.com",
+  tagline: "Portfolio - Memo Task Management",
+  email: "ignaway@gmail.com",
   socials: [
-    { label: "GitHub", href: "https://github.com/username", icon: "github" },
-    { label: "LinkedIn", href: "https://linkedin.com/in/username", icon: "linkedin" },
-    { label: "Portfolio", href: "https://domain.com", icon: "globe" },
+    { label: "GitHub", href: "https://github.com/ignaways", icon: "github" },
+    { label: "LinkedIn", href: "https://www.linkedin.com/in/ignatius-andri", icon: "linkedin" },
+    { label: "Portfolio", href: "https://www.ignaway.com", icon: "globe" },
   ],
 };
