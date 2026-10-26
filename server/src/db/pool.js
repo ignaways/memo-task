@@ -7,7 +7,7 @@ pg.types.setTypeParser(DATE_OID, (value) => value);
 export const pool = new pg.Pool({
   connectionString: env.DATABASE_URL,
   ssl: env.DATABASE_SSL ? { rejectUnauthorized: false } : false,
-  max: 10,
+  max: env.DB_POOL_MAX,
   idleTimeoutMillis: 30000,
 });
 

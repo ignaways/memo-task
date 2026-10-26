@@ -18,6 +18,7 @@ const schema = z.object({
   JWT_SECRET: z.string().min(32, "JWT_SECRET minimal 32 karakter"),
   JWT_EXPIRES_IN: z.string().default("7d"),
   BCRYPT_ROUNDS: z.coerce.number().int().min(4).max(15).default(10),
+  DB_POOL_MAX: z.coerce.number().int().positive().default(process.env.VERCEL ? 3 : 10),
   CLIENT_ORIGIN: z
     .string()
     .default("http://localhost:5173")
