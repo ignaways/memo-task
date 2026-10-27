@@ -1,4 +1,3 @@
-import PriorityIcon from "../ui/PriorityIcon";
 import { PRIORITIES } from "../../constants/priorities";
 
 export default function PrioritySelect({ id, value, onChange }) {
@@ -13,13 +12,10 @@ export default function PrioritySelect({ id, value, onChange }) {
             role="radio"
             aria-checked={active}
             onClick={() => onChange(priority.id)}
-            className={`flex items-center justify-center gap-1.5 rounded-lg border px-2 py-2 text-sm font-medium transition focus:outline-none focus-visible:ring-2 focus-visible:ring-secondary-400 ${
-              active
-                ? "border-primary-700 bg-primary-50 text-primary-800"
-                : "border-stone-300 text-stone-600 hover:border-stone-400"
+            className={`rounded-lg border px-2 py-2 text-sm font-semibold transition focus:outline-none focus-visible:ring-2 focus-visible:ring-secondary-400 ${
+              active ? priority.activeClass : `border-stone-300 ${priority.idleClass}`
             }`}
           >
-            <PriorityIcon priority={priority.id} />
             {priority.label}
           </button>
         );

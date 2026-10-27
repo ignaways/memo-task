@@ -5,7 +5,7 @@ export default function CategoryList({ categories, taskCountByCategory, onEdit, 
     return (
       <div className="rounded-xl border-2 border-dashed border-stone-300 p-10 text-center">
         <p className="font-medium text-stone-700">Belum ada kategori</p>
-        <p className="mt-1 text-sm text-stone-500">Buat kategori pertama untuk mulai menambahkan task.</p>
+        <p className="mt-1 text-sm text-stone-500">Buat kategori untuk menambahkan task.</p>
       </div>
     );
   }
