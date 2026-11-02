@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import LanguageSwitcher from "../ui/LanguageSwitcher";
 import useAuth from "../../hooks/useAuth";
 import useTranslation from "../../hooks/useTranslation";
 
@@ -32,10 +33,13 @@ export default function Header() {
           <span />
         )}
 
-        <Link to="/" className="rounded text-right focus:outline-none focus-visible:ring-2 focus-visible:ring-white/70">
-          <p className="text-xl font-bold tracking-tight sm:text-2xl">Memo Board</p>
-          <p className="text-xs text-primary-200">{t("header.tagline")}</p>
-        </Link>
+        <div className="flex shrink-0 items-center gap-4">
+          <LanguageSwitcher />
+          <Link to="/" className="rounded text-right focus:outline-none focus-visible:ring-2 focus-visible:ring-white/70">
+            <p className="text-xl font-bold tracking-tight sm:text-2xl">Memo Board</p>
+            <p className="hidden text-xs text-primary-200 sm:block">{t("header.tagline")}</p>
+          </Link>
+        </div>
       </div>
     </header>
   );

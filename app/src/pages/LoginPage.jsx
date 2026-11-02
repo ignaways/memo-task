@@ -7,7 +7,6 @@ import Alert from "../components/ui/Alert";
 import Button from "../components/ui/Button";
 import Spinner from "../components/ui/Spinner";
 import ServerWakeHint from "../components/ui/ServerWakeHint";
-import LanguageSwitcher from "../components/ui/LanguageSwitcher";
 import useAuth from "../hooks/useAuth";
 import useTranslation from "../hooks/useTranslation";
 
@@ -67,7 +66,6 @@ export default function LoginPage() {
     <AuthCard
       title={t("auth.login.title")}
       subtitle={t("auth.login.subtitle")}
-      action={<LanguageSwitcher />}
       footer={
         <>
           <div>
