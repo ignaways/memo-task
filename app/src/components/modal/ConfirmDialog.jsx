@@ -3,8 +3,10 @@ import Modal from "./Modal";
 import Alert from "../ui/Alert";
 import Button from "../ui/Button";
 import Spinner from "../ui/Spinner";
+import useTranslation from "../../hooks/useTranslation";
 
-export default function ConfirmDialog({ open, onClose, onConfirm, title, message, confirmLabel = "Hapus" }) {
+export default function ConfirmDialog({ open, onClose, onConfirm, title, message, confirmLabel }) {
+  const { t } = useTranslation();
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
 
@@ -34,11 +36,11 @@ export default function ConfirmDialog({ open, onClose, onConfirm, title, message
         <Alert>{error}</Alert>
         <div className="flex flex-col-reverse gap-2 sm:flex-row sm:justify-end">
           <Button variant="ghost" onClick={handleClose} disabled={busy}>
-            Batal
+            {t("common.cancel")}
           </Button>
           <Button variant="danger" onClick={handleConfirm} disabled={busy}>
             {busy && <Spinner size={16} />}
-            {busy ? "Menghapus..." : confirmLabel}
+            {busy ? t("common.deleting") : confirmLabel ?? t("common.delete")}
           </Button>
         </div>
       </div>

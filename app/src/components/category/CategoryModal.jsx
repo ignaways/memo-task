@@ -8,10 +8,12 @@ import CategoryIconTile from "./CategoryIconTile";
 import CategoryIconSelect from "./CategoryIconSelect";
 import CategoryColorSelect from "./CategoryColorSelect";
 import { DEFAULT_CATEGORY_COLOR, DEFAULT_CATEGORY_ICON } from "../../constants/categoryIcons";
+import useTranslation from "../../hooks/useTranslation";
 
 const emptyForm = { name: "", description: "", icon: DEFAULT_CATEGORY_ICON, color: DEFAULT_CATEGORY_COLOR };
 
 export default function CategoryModal({ open, category = null, onClose, onSubmit }) {
+  const { t } = useTranslation();
   const [form, setForm] = useState(emptyForm);
   const [errors, setErrors] = useState({});
   const [message, setMessage] = useState("");
@@ -41,7 +43,7 @@ export default function CategoryModal({ open, category = null, onClose, onSubmit
   const handleSubmit = async (event) => {
     event.preventDefault();
     if (!form.name.trim()) {
-      setErrors({ name: "Nama kategori wajib diisi." });
+      setErrors({ name: t("category.modal.nameRequired") });
       return;
     }
 
@@ -63,8 +65,8 @@ export default function CategoryModal({ open, category = null, onClose, onSubmit
       open={open}
       onClose={onClose}
       size="lg"
-      title={isEdit ? "Edit kategori" : "Kategori baru"}
-      subtitle={isEdit ? "Ubah nama, deskripsi, ikon, atau warna." : "Kelompokkan task berdasarkan kategori."}
+      title={isEdit ? t("category.modal.editTitle") : t("category.modal.newTitle")}
+      subtitle={isEdit ? t("category.modal.editSubtitle") : t("category.modal.newSubtitle")}
     >
       <form onSubmit={handleSubmit} noValidate className="mt-5 space-y-4">
         <Alert>{message}</Alert>
@@ -72,50 +74,50 @@ export default function CategoryModal({ open, category = null, onClose, onSubmit
         <div className="flex items-center gap-3 rounded-xl bg-stone-50 p-3">
           <CategoryIconTile icon={form.icon} color={form.color} size="lg" />
           <div className="min-w-0">
-            <p className="truncate font-bold text-stone-900">{form.name.trim() || "Nama kategori"}</p>
-            <p className="truncate text-sm text-stone-500">{form.description.trim() || "Preview tampilan kategori"}</p>
+            <p className="truncate font-bold text-stone-900">{form.name.trim() || t("category.modal.previewName")}</p>
+            <p className="truncate text-sm text-stone-500">{form.description.trim() || t("category.modal.previewDescription")}</p>
           </div>
         </div>
 
-        <FormField id="category-name" label="Nama kategori" error={errors.name}>
+        <FormField id="category-name" label={t("category.modal.name")} error={errors.name}>
           <input
             id="category-name"
             ref={nameRef}
             value={form.name}
             maxLength={80}
             onChange={(event) => setField("name")(event.target.value)}
-            placeholder="Contoh: Perkuliahan"
+            placeholder={t("category.modal.namePlaceholder")}
             aria-invalid={Boolean(errors.name)}
             className={`${inputClass} ${errors.name ? "border-rose-400" : ""}`}
           />
         </FormField>
 
-        <FormField id="category-description" label="Deskripsi" hint="(opsional)" error={errors.description}>
+        <FormField id="category-description" label={t("category.modal.description")} hint={t("common.optional")} error={errors.description}>
           <input
             id="category-description"
             value={form.description}
             maxLength={200}
             onChange={(event) => setField("description")(event.target.value)}
-            placeholder="Contoh: Task semester ganjil 2026/2027"
+            placeholder={t("category.modal.descriptionPlaceholder")}
             className={inputClass}
           />
         </FormField>
 
-        <FormField id="category-icon" label="Ikon" error={errors.icon}>
+        <FormField id="category-icon" label={t("category.modal.icon")} error={errors.icon}>
           <CategoryIconSelect id="category-icon" value={form.icon} onChange={setField("icon")} />
         </FormField>
 
-        <FormField id="category-color" label="Warna ikon" error={errors.color}>
+        <FormField id="category-color" label={t("category.modal.color")} error={errors.color}>
           <CategoryColorSelect id="category-color" value={form.color} onChange={setField("color")} />
         </FormField>
 
         <div className="flex flex-col-reverse gap-2 pt-2 sm:flex-row sm:justify-end">
           <Button variant="ghost" onClick={onClose}>
-            Batal
+            {t("common.cancel")}
           </Button>
           <Button type="submit" disabled={saving}>
             {saving && <Spinner size={16} />}
-            {saving ? "Menyimpan..." : isEdit ? "Simpan perubahan" : "Simpan kategori"}
+            {saving ? t("common.saving") : isEdit ? t("common.saveChanges") : t("category.modal.save")}
           </Button>
         </div>
       </form>

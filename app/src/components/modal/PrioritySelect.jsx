@@ -1,8 +1,10 @@
 import { PRIORITIES } from "../../constants/priorities";
+import useTranslation from "../../hooks/useTranslation";
 
 export default function PrioritySelect({ id, value, onChange }) {
+  const { t } = useTranslation();
   return (
-    <div id={id} role="radiogroup" aria-label="Priority" className="grid grid-cols-3 gap-2">
+    <div id={id} role="radiogroup" aria-label={t("priorities.group")} className="grid grid-cols-3 gap-2">
       {PRIORITIES.map((priority) => {
         const active = value === priority.id;
         return (
@@ -16,7 +18,7 @@ export default function PrioritySelect({ id, value, onChange }) {
               active ? priority.activeClass : `border-stone-300 ${priority.idleClass}`
             }`}
           >
-            {priority.label}
+            {t(`priorities.${priority.id}`)}
           </button>
         );
       })}

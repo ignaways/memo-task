@@ -1,9 +1,11 @@
 import { useState } from "react";
 import { ChecklistIcon } from "../ui/Icons";
+import useTranslation from "../../hooks/useTranslation";
 
 const PREVIEW_LIMIT = 3;
 
 export default function TaskChecklist({ items, onToggle }) {
+  const { t } = useTranslation();
   const [expanded, setExpanded] = useState(false);
   const done = items.filter((item) => item.done).length;
   const percent = Math.round((done / items.length) * 100);
@@ -15,7 +17,7 @@ export default function TaskChecklist({ items, onToggle }) {
       <div className="flex items-center justify-between text-xs font-medium text-stone-600">
         <span className="inline-flex items-center gap-1">
           <ChecklistIcon />
-          Checklist
+          {t("board.checklist")}
         </span>
         <span className={done === items.length ? "text-emerald-600" : ""}>
           {done}/{items.length}
@@ -48,7 +50,7 @@ export default function TaskChecklist({ items, onToggle }) {
           onClick={() => setExpanded((prev) => !prev)}
           className="mt-1.5 rounded text-xs font-medium text-primary-700 hover:underline focus:outline-none focus-visible:ring-2 focus-visible:ring-secondary-400"
         >
-          {expanded ? "Sembunyikan" : `Lihat ${hiddenCount} lainnya`}
+          {expanded ? t("board.hide") : t("board.showMore", { count: hiddenCount })}
         </button>
       )}
     </div>

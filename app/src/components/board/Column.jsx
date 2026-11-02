@@ -3,6 +3,7 @@ import { SortableContext, verticalListSortingStrategy } from "@dnd-kit/sortable"
 import SortableTaskCard from "./SortableTaskCard";
 import EmptyColumn from "./EmptyColumn";
 import { toColumnId } from "../../constants/dnd";
+import useTranslation from "../../hooks/useTranslation";
 
 export default function Column({
   column,
@@ -15,12 +16,14 @@ export default function Column({
   onDelete,
   onToggleChecklist,
 }) {
+  const { t } = useTranslation();
+  const title = t(`columns.${column.id}`);
   const { setNodeRef } = useDroppable({ id: toColumnId(column.id) });
   const tasks = taskIds.map((id) => taskMap.get(id)).filter(Boolean);
 
   return (
     <section
-      aria-label={column.title}
+      aria-label={title}
       className={`flex min-h-96 flex-col rounded-2xl p-3 transition duration-200 ${
         isHighlighted ? `${column.soft} ring-2 ${column.ring}` : "bg-stone-100"
       }`}
@@ -28,7 +31,7 @@ export default function Column({
       <header className="mb-3 flex items-center justify-between px-1">
         <div className="flex items-center gap-2">
           <span className={`h-2.5 w-2.5 rounded-full ${column.dot}`} />
-          <h2 className="text-sm font-semibold text-stone-800">{column.title}</h2>
+          <h2 className="text-sm font-semibold text-stone-800">{title}</h2>
         </div>
         <span
           key={tasks.length}

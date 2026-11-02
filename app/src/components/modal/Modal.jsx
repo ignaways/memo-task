@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { CloseIcon } from "../ui/Icons";
 import IconButton from "../ui/IconButton";
+import useTranslation from "../../hooks/useTranslation";
 
 const SIZES = {
   md: "max-w-md",
@@ -8,6 +9,7 @@ const SIZES = {
 };
 
 export default function Modal({ open, onClose, title, subtitle, size = "md", children }) {
+  const { t } = useTranslation();
   useEffect(() => {
     if (!open) return undefined;
 
@@ -44,7 +46,7 @@ export default function Modal({ open, onClose, title, subtitle, size = "md", chi
               </h2>
               {subtitle && <p className="mt-1 text-sm text-stone-500">{subtitle}</p>}
             </div>
-            <IconButton onClick={onClose} aria-label="Tutup">
+            <IconButton onClick={onClose} aria-label={t("common.close")}>
               <CloseIcon size={18} />
             </IconButton>
           </div>

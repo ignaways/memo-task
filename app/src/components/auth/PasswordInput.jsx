@@ -1,7 +1,9 @@
 import { useState } from "react";
 import { inputClass } from "../ui/FormField";
+import useTranslation from "../../hooks/useTranslation";
 
 export default function PasswordInput({ className = "", ...props }) {
+  const { t } = useTranslation();
   const [visible, setVisible] = useState(false);
 
   return (
@@ -13,7 +15,7 @@ export default function PasswordInput({ className = "", ...props }) {
         aria-pressed={visible}
         className="absolute inset-y-0 right-2 my-auto h-7 rounded px-2 text-xs font-medium text-stone-500 hover:text-primary-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-secondary-400"
       >
-        {visible ? "Sembunyikan" : "Lihat"}
+        {visible ? t("auth.hide") : t("auth.show")}
       </button>
     </div>
   );

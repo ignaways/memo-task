@@ -1,4 +1,5 @@
 import { tokenStorage } from "../utils/tokenStorage";
+import { getCurrentLanguage, t } from "../i18n";
 
 const BASE_URL = (import.meta.env.VITE_API_URL || "http://localhost:4000").replace(/\/+$/, "");
 
@@ -24,7 +25,7 @@ export const setUnauthorizedHandler = (handler) => {
 
 const request = async (path, { method = "GET", body, auth = true } = {}) => {
   const token = auth ? tokenStorage.get() : null;
-  const headers = {};
+  const headers = { "Accept-Language": getCurrentLanguage() };
   if (body !== undefined) headers["Content-Type"] = "application/json";
   if (token) headers.Authorization = `Bearer ${token}`;
 
@@ -36,7 +37,7 @@ const request = async (path, { method = "GET", body, auth = true } = {}) => {
       body: body !== undefined ? JSON.stringify(body) : undefined,
     });
   } catch {
-    throw new ApiError("Tidak dapat terhubung ke server. Periksa koneksi internet kamu.", { code: "NETWORK_ERROR" });
+    throw new ApiError(t("errors.network"),{ code: "NETWORK_ERROR" });
   }
 
   if (response.status === 204) return null;
@@ -46,7 +47,7 @@ const request = async (path, { method = "GET", body, auth = true } = {}) => {
   if (!response.ok) {
     const error = payload?.error ?? {};
     if (response.status === 401 && token) unauthorizedHandler?.();
-    throw new ApiError(error.message ?? "Terjadi kesalahan pada server.", {
+    throw new ApiError(error.message ?? t("errors.server"), {
       status: response.status,
       code: error.code,
       details: error.details ?? [],

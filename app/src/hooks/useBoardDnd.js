@@ -3,6 +3,7 @@ import { KeyboardSensor, MouseSensor, TouchSensor, useSensor, useSensors } from 
 import { arrayMove, sortableKeyboardCoordinates } from "@dnd-kit/sortable";
 import { COLUMNS } from "../constants/columns";
 import { SENSOR_OPTIONS, fromColumnId } from "../constants/dnd";
+import useTranslation from "./useTranslation";
 
 const groupByStatus = (tasks) =>
   Object.fromEntries(
@@ -18,6 +19,7 @@ const isBelowOverItem = (active, over) => {
 };
 
 export default function useBoardDnd(tasks, onMove) {
+  const { t } = useTranslation();
   const sensors = useSensors(
     useSensor(MouseSensor, SENSOR_OPTIONS.mouse),
     useSensor(TouchSensor, SENSOR_OPTIONS.touch),
@@ -91,25 +93,27 @@ export default function useBoardDnd(tasks, onMove) {
     onMove(active.id, status, items[index + 1] ?? null);
   };
 
-  const getTitle = (id) => taskMap.get(id)?.title ?? "task";
-  const getColumnTitle = (id) => COLUMNS.find((column) => column.id === findStatus(id, columns))?.title ?? "";
+  const getTitle = (id) => taskMap.get(id)?.title ?? t("board.dnd.fallbackTitle");
+  const getColumnTitle = (id) => {
+    const column = COLUMNS.find((item) => item.id === findStatus(id, columns));
+    return column ? t(`columns.${column.id}`) : "";
+  };
 
   const accessibility = {
     screenReaderInstructions: {
-      draggable:
-        "Tekan spasi atau enter untuk mengambil task. Gunakan tombol panah untuk memindahkan, tekan spasi atau enter untuk melepas, atau escape untuk membatalkan.",
+      draggable: t("board.dnd.instructions"),
     },
     announcements: {
-      onDragStart: ({ active }) => `Mengambil task ${getTitle(active.id)}.`,
+      onDragStart: ({ active }) => t("board.dnd.start", { title: getTitle(active.id) }),
       onDragOver: ({ active, over }) =>
         over
-          ? `Task ${getTitle(active.id)} berada di kolom ${getColumnTitle(over.id)}.`
-          : `Task ${getTitle(active.id)} tidak berada di area kolom.`,
+          ? t("board.dnd.over", { title: getTitle(active.id), column: getColumnTitle(over.id) })
+          : t("board.dnd.outside", { title: getTitle(active.id) }),
       onDragEnd: ({ active, over }) =>
         over
-          ? `Task ${getTitle(active.id)} dilepas di kolom ${getColumnTitle(over.id)}.`
-          : `Task ${getTitle(active.id)} dilepas.`,
-      onDragCancel: ({ active }) => `Pemindahan task ${getTitle(active.id)} dibatalkan.`,
+          ? t("board.dnd.end", { title: getTitle(active.id), column: getColumnTitle(over.id) })
+          : t("board.dnd.endOutside", { title: getTitle(active.id) }),
+      onDragCancel: ({ active }) => t("board.dnd.cancel", { title: getTitle(active.id) }),
     },
   };
 

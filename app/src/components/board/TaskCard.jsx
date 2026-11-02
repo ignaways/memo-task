@@ -5,6 +5,7 @@ import DeadlineBadge from "../ui/DeadlineBadge";
 import TaskChecklist from "./TaskChecklist";
 import { ChevronLeftIcon, ChevronRightIcon, PencilIcon, TrashIcon } from "../ui/Icons";
 import { COLUMNS, STATUS, getColumnIndex } from "../../constants/columns";
+import useTranslation from "../../hooks/useTranslation";
 
 const noop = () => {};
 
@@ -30,6 +31,7 @@ export default function TaskCard({
   onDelete = noop,
   onToggleChecklist = noop,
 }) {
+  const { t } = useTranslation();
   const index = getColumnIndex(task.status);
   const prev = COLUMNS[index - 1];
   const next = COLUMNS[index + 1];
@@ -49,10 +51,10 @@ export default function TaskCard({
         <div className="flex items-center justify-between gap-2">
           <PriorityBadge priority={task.priority} />
           <div className="flex gap-0.5 md:opacity-0 md:transition md:group-hover:opacity-100 md:focus-within:opacity-100">
-            <IconButton tone="primary" onClick={() => onEdit(task)} aria-label={`Edit task ${task.title}`}>
+            <IconButton tone="primary" onClick={() => onEdit(task)} aria-label={t("board.editTask", { title: task.title })}>
               <PencilIcon />
             </IconButton>
-            <IconButton tone="danger" onClick={() => onDelete(task.id)} aria-label={`Hapus task ${task.title}`}>
+            <IconButton tone="danger" onClick={() => onDelete(task.id)} aria-label={t("board.deleteTask", { title: task.title })}>
               <TrashIcon />
             </IconButton>
           </div>
@@ -90,14 +92,14 @@ export default function TaskCard({
             <IconButton
               disabled={!prev}
               onClick={() => prev && onMove(task.id, prev.id)}
-              aria-label={prev ? `Pindah ke ${prev.title}` : "Sudah di kolom pertama"}
+              aria-label={prev ? t("board.moveTo", { column: t(`columns.${prev.id}`) }) : t("board.firstColumn")}
             >
               <ChevronLeftIcon />
             </IconButton>
             <IconButton
               disabled={!next}
               onClick={() => next && onMove(task.id, next.id)}
-              aria-label={next ? `Pindah ke ${next.title}` : "Sudah di kolom terakhir"}
+              aria-label={next ? t("board.moveTo", { column: t(`columns.${next.id}`) }) : t("board.lastColumn")}
             >
               <ChevronRightIcon />
             </IconButton>

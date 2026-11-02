@@ -7,16 +7,18 @@ import Alert from "../components/ui/Alert";
 import Button from "../components/ui/Button";
 import Spinner from "../components/ui/Spinner";
 import ServerWakeHint from "../components/ui/ServerWakeHint";
+import LanguageSwitcher from "../components/ui/LanguageSwitcher";
 import useAuth from "../hooks/useAuth";
+import useTranslation from "../hooks/useTranslation";
 
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-const validate = ({ name, email, password, confirmPassword }) => {
+const validate = ({ name, email, password, confirmPassword }, t) => {
   const errors = {};
-  if (!name.trim()) errors.name = "Nama wajib diisi.";
-  if (!EMAIL_PATTERN.test(email.trim())) errors.email = "Format email tidak valid.";
-  if (password.length < 8) errors.password = "Password minimal 8 karakter.";
-  if (confirmPassword !== password) errors.confirmPassword = "Konfirmasi password tidak sama.";
+  if (!name.trim()) errors.name = t("auth.register.nameRequired");
+  if (!EMAIL_PATTERN.test(email.trim())) errors.email = t("auth.register.emailInvalid");
+  if (password.length < 8) errors.password = t("auth.register.passwordMin");
+  if (confirmPassword !== password) errors.confirmPassword = t("auth.register.confirmMismatch");
   return errors;
 };
 
@@ -24,6 +26,7 @@ const linkClass = "rounded font-semibold text-primary-700 hover:underline focus:
 
 export default function RegisterPage() {
   const { register } = useAuth();
+  const { t } = useTranslation();
   const [form, setForm] = useState({ name: "", email: "", password: "", confirmPassword: "" });
   const [errors, setErrors] = useState({});
   const [message, setMessage] = useState("");
@@ -36,7 +39,7 @@ export default function RegisterPage() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const nextErrors = validate(form);
+    const nextErrors = validate(form, t);
     if (Object.keys(nextErrors).length) {
       setErrors(nextErrors);
       return;
@@ -57,13 +60,14 @@ export default function RegisterPage() {
 
   return (
     <AuthCard
-      title="Buat akun"
-      subtitle="Simpan kategori dan task kamu dengan aman."
+      title={t("auth.register.title")}
+      subtitle={t("auth.register.subtitle")}
+      action={<LanguageSwitcher />}
       footer={
         <>
-          Sudah punya akun?{" "}
+          {t("auth.register.haveAccount")}{" "}
           <Link to="/login" className={linkClass}>
-            Masuk
+            {t("auth.register.login")}
           </Link>
         </>
       }
@@ -71,19 +75,19 @@ export default function RegisterPage() {
       <form onSubmit={handleSubmit} noValidate className="space-y-4">
         <Alert>{message}</Alert>
 
-        <FormField id="register-name" label="Nama" error={errors.name}>
+        <FormField id="register-name" label={t("auth.register.name")} error={errors.name}>
           <input
             id="register-name"
             autoComplete="name"
             value={form.name}
             onChange={setField("name")}
             aria-invalid={Boolean(errors.name)}
-            placeholder="Nama kamu"
+            placeholder={t("auth.register.namePlaceholder")}
             className={`${inputClass} ${errorClass("name")}`}
           />
         </FormField>
 
-        <FormField id="register-email" label="Email" error={errors.email}>
+        <FormField id="register-email" label={t("auth.email")} error={errors.email}>
           <input
             id="register-email"
             type="email"
@@ -91,12 +95,12 @@ export default function RegisterPage() {
             value={form.email}
             onChange={setField("email")}
             aria-invalid={Boolean(errors.email)}
-            placeholder="nama@email.com"
+            placeholder={t("auth.emailPlaceholder")}
             className={`${inputClass} ${errorClass("email")}`}
           />
         </FormField>
 
-        <FormField id="register-password" label="Password" hint="(min. 8 karakter)" error={errors.password}>
+        <FormField id="register-password" label={t("auth.password")} hint={t("auth.register.passwordHint")} error={errors.password}>
           <PasswordInput
             id="register-password"
             autoComplete="new-password"
@@ -107,7 +111,7 @@ export default function RegisterPage() {
           />
         </FormField>
 
-        <FormField id="register-confirm" label="Konfirmasi password" error={errors.confirmPassword}>
+        <FormField id="register-confirm" label={t("auth.register.confirmPassword")} error={errors.confirmPassword}>
           <PasswordInput
             id="register-confirm"
             autoComplete="new-password"
@@ -120,7 +124,7 @@ export default function RegisterPage() {
 
         <Button type="submit" className="w-full" disabled={submitting}>
           {submitting && <Spinner size={16} />}
-          {submitting ? "Membuat akun..." : "Daftar"}
+          {submitting ? t("auth.register.submitting") : t("auth.register.submit")}
         </Button>
 
         <ServerWakeHint active={submitting} />

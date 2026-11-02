@@ -4,6 +4,7 @@ import { authService } from "../services/authService";
 import { setUnauthorizedHandler } from "../services/apiClient";
 import { tokenStorage } from "../utils/tokenStorage";
 import useToast from "../hooks/useToast";
+import useTranslation from "../hooks/useTranslation";
 
 export const AUTH_STATUS = {
   CHECKING: "checking",
@@ -14,6 +15,7 @@ export const AUTH_STATUS = {
 
 export default function AuthProvider({ children }) {
   const toast = useToast();
+  const { t } = useTranslation();
   const [user, setUser] = useState(null);
   const [status, setStatus] = useState(() => (tokenStorage.get() ? AUTH_STATUS.CHECKING : AUTH_STATUS.GUEST));
 
@@ -55,10 +57,10 @@ export default function AuthProvider({ children }) {
   useEffect(() => {
     setUnauthorizedHandler(() => {
       logout();
-      toast.error("Sesi kamu berakhir, silakan login kembali.");
+      toast.error(t("auth.sessionExpired"));
     });
     return () => setUnauthorizedHandler(null);
-  }, [logout, toast]);
+  }, [logout, toast, t]);
 
   const login = useCallback(async (credentials) => startSession(await authService.login(credentials)), [startSession]);
 

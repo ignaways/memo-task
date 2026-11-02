@@ -1,16 +1,19 @@
 import { CATEGORY_COLORS } from "../../constants/categoryIcons";
 import { getContrastText } from "../../utils/color";
 import { CheckIcon } from "../ui/Icons";
+import useTranslation from "../../hooks/useTranslation";
 
 const swatchClass =
   "relative flex h-8 w-8 items-center justify-center rounded-full ring-offset-2 transition focus:outline-none focus-visible:ring-2 focus-visible:ring-secondary-400";
 
 export default function CategoryColorSelect({ id, value, onChange }) {
+  const { t } = useTranslation();
   const isCustom = !CATEGORY_COLORS.some((color) => color.id === value);
 
   return (
-    <div id={id} role="radiogroup" aria-label="Warna ikon" className="flex flex-wrap gap-2">
-      {CATEGORY_COLORS.map(({ id: colorId, label }) => {
+    <div id={id} role="radiogroup" aria-label={t("category.modal.color")} className="flex flex-wrap gap-2">
+      {CATEGORY_COLORS.map(({ id: colorId, key }) => {
+        const label = t(`colors.${key}`);
         const active = value === colorId;
         return (
           <button
@@ -30,7 +33,7 @@ export default function CategoryColorSelect({ id, value, onChange }) {
       })}
 
       <label
-        title="Warna custom"
+        title={t("category.customColor")}
         className={`${swatchClass} cursor-pointer focus-within:ring-2 focus-within:ring-secondary-400 ${
           isCustom ? "ring-2 ring-stone-900" : "hover:scale-110"
         }`}
@@ -45,7 +48,7 @@ export default function CategoryColorSelect({ id, value, onChange }) {
           type="color"
           value={value}
           onChange={(event) => onChange(event.target.value.toLowerCase())}
-          aria-label="Warna custom"
+          aria-label={t("category.customColor")}
           className="absolute inset-0 h-full w-full cursor-pointer opacity-0"
         />
       </label>

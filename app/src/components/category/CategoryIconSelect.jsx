@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { CATEGORY_ICONS, isPresetIcon, isSingleEmoji } from "../../constants/categoryIcons";
 import { inputClass } from "../ui/FormField";
+import useTranslation from "../../hooks/useTranslation";
 
 const optionClass = (active) =>
   `flex aspect-square items-center justify-center rounded-lg border transition focus:outline-none focus-visible:ring-2 focus-visible:ring-secondary-400 ${
@@ -10,10 +11,11 @@ const optionClass = (active) =>
   }`;
 
 export default function CategoryIconSelect({ id, value, onChange }) {
+  const { t } = useTranslation();
   const [draft, setDraft] = useState(null);
   const isCustom = !isPresetIcon(value);
   const emoji = draft ?? (isCustom ? value : "");
-  const emojiError = emoji && !isSingleEmoji(emoji) ? "Masukkan satu emoji saja." : "";
+  const emojiError = emoji && !isSingleEmoji(emoji) ? t("category.emojiError") : "";
 
   const handleEmojiChange = (event) => {
     const next = event.target.value.trim();
@@ -26,10 +28,11 @@ export default function CategoryIconSelect({ id, value, onChange }) {
       <div
         id={id}
         role="radiogroup"
-        aria-label="Ikon kategori"
+        aria-label={t("category.iconGroup")}
         className="grid max-h-44 grid-cols-6 gap-1.5 overflow-y-auto rounded-lg border border-stone-200 p-2 sm:grid-cols-8"
       >
-        {CATEGORY_ICONS.map(({ id: iconId, label, Icon }) => {
+        {CATEGORY_ICONS.map(({ id: iconId, Icon }) => {
+          const label = t(`icons.${iconId}`);
           const active = value === iconId;
           return (
             <button
@@ -57,8 +60,8 @@ export default function CategoryIconSelect({ id, value, onChange }) {
             value={emoji}
             onChange={handleEmojiChange}
             onFocus={() => emoji && !emojiError && onChange(emoji)}
-            placeholder="Atau ketik / tempel emoji custom"
-            aria-label="Emoji custom"
+            placeholder={t("category.emojiPlaceholder")}
+            aria-label={t("category.emojiAria")}
             aria-invalid={Boolean(emojiError)}
             className={`${inputClass} ${emojiError ? "border-rose-400" : ""}`}
           />

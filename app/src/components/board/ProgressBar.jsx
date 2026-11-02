@@ -1,10 +1,11 @@
+import useTranslation from "../../hooks/useTranslation";
+
 export default function ProgressBar({ done, total, percent }) {
+  const { t } = useTranslation();
   return (
     <div className="mt-8">
       <div className="flex items-center justify-between text-xs font-medium text-stone-500">
-        <span>
-          {done} dari {total} task selesai
-        </span>
+        <span>{t("board.progress", { done, total })}</span>
         <span>{percent}%</span>
       </div>
       <div

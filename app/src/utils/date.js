@@ -12,8 +12,8 @@ const parseDateInput = (value) => {
   return new Date(year, month - 1, day);
 };
 
-export const formatDeadline = (value) =>
-  parseDateInput(value).toLocaleDateString("id-ID", {
+export const formatDeadline = (value, locale = "id-ID") =>
+  parseDateInput(value).toLocaleDateString(locale, {
     day: "numeric",
     month: "short",
     year: "numeric",

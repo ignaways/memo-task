@@ -1,8 +1,10 @@
 import { useState } from "react";
 import TagChip from "../ui/TagChip";
 import { normalizeTag } from "../../utils/tags";
+import useTranslation from "../../hooks/useTranslation";
 
 export default function TagInput({ id, tags, onChange, suggestions = [] }) {
+  const { t } = useTranslation();
   const [value, setValue] = useState("");
 
   const addTag = (raw) => {
@@ -37,7 +39,7 @@ export default function TagInput({ id, tags, onChange, suggestions = [] }) {
           onChange={(event) => setValue(event.target.value)}
           onKeyDown={handleKeyDown}
           onBlur={() => value && addTag(value)}
-          placeholder={tags.length ? "" : "Ketik tag lalu tekan Enter"}
+          placeholder={tags.length ? "" : t("task.tagsPlaceholder")}
           className="min-w-24 flex-1 bg-transparent px-1 py-0.5 text-sm text-stone-900 outline-none"
         />
       </div>

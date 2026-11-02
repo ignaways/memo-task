@@ -1,10 +1,12 @@
 import { useMemo, useState } from "react";
 import { getTagColor } from "../../utils/tags";
+import useTranslation from "../../hooks/useTranslation";
 
 const baseChip =
   "inline-flex items-center gap-1.5 rounded-full border px-3 py-1 text-xs font-medium transition focus:outline-none focus-visible:ring-2 focus-visible:ring-secondary-400";
 
 export default function TagFilter({ tags, tagCounts, selectedTags, isAllSelected, onToggle, onSelectAll, total, shown }) {
+  const { t } = useTranslation();
   const [query, setQuery] = useState("");
 
   const visibleTags = useMemo(() => {
@@ -15,20 +17,20 @@ export default function TagFilter({ tags, tagCounts, selectedTags, isAllSelected
   if (tags.length === 0) return null;
 
   return (
-    <section aria-label="Filter tag" className="mt-8 rounded-2xl border border-stone-200 p-4">
+    <section aria-label={t("filter.aria")} className="mt-8 rounded-2xl border border-stone-200 p-4">
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <h2 className="text-sm font-semibold text-stone-800">Filter berdasarkan tag</h2>
+          <h2 className="text-sm font-semibold text-stone-800">{t("filter.title")}</h2>
           <p className="text-xs text-stone-500">
-            Menampilkan {shown} dari {total} task
+            {t("filter.showing", { shown, total })}
           </p>
         </div>
         <input
           type="search"
           value={query}
           onChange={(event) => setQuery(event.target.value)}
-          placeholder="Cari tag..."
-          aria-label="Cari tag"
+          placeholder={t("filter.search")}
+          aria-label={t("filter.searchAria")}
           className="w-full rounded-lg border border-stone-300 px-3 py-1.5 text-sm outline-none transition focus:border-primary-500 focus:ring-2 focus:ring-primary-200 sm:w-56"
         />
       </div>
@@ -44,7 +46,7 @@ export default function TagFilter({ tags, tagCounts, selectedTags, isAllSelected
               : "border-stone-300 bg-white text-stone-600 hover:border-stone-400"
           }`}
         >
-          Semua
+          {t("filter.all")}
           <span className={isAllSelected ? "text-primary-200" : "text-stone-400"}>{total}</span>
         </button>
 
@@ -66,7 +68,7 @@ export default function TagFilter({ tags, tagCounts, selectedTags, isAllSelected
           );
         })}
 
-        {visibleTags.length === 0 && <p className="py-1 text-xs text-stone-400">Tag "{query}" tidak ditemukan.</p>}
+        {visibleTags.length === 0 && <p className="py-1 text-xs text-stone-400">{t("filter.notFound", { query })}</p>}
       </div>
     </section>
   );

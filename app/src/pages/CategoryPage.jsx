@@ -10,6 +10,7 @@ import ServerWakeHint from "../components/ui/ServerWakeHint";
 import { PlusIcon } from "../components/ui/Icons";
 import { LOAD_STATUS } from "../constants/loadStatus";
 import useMemoStore from "../hooks/useMemoStore";
+import useTranslation from "../hooks/useTranslation";
 
 export default function CategoryPage() {
   const {
@@ -22,6 +23,7 @@ export default function CategoryPage() {
     deleteCategory,
     loadCategories,
   } = useMemoStore();
+  const { t } = useTranslation();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editing, setEditing] = useState(null);
   const [deleting, setDeleting] = useState(null);
@@ -66,12 +68,12 @@ export default function CategoryPage() {
   return (
     <>
       <PageHeader
-        title="Category"
-        subtitle="Create or select category"
+        title={t("category.title")}
+        subtitle={t("category.subtitle")}
         action={
           <Button size="sm" onClick={openCreate} disabled={isLoading}>
             <PlusIcon size={14} />
-            Add Category
+            {t("category.add")}
           </Button>
         }
       />
@@ -89,11 +91,11 @@ export default function CategoryPage() {
         open={Boolean(deleting)}
         onClose={() => setDeleting(null)}
         onConfirm={() => deleteCategory(deleting.id)}
-        title="Hapus kategori?"
+        title={t("category.deleteTitle")}
         message={
           deletingCount > 0
-            ? `Kategori "${deleting?.name}" beserta ${deletingCount} task di dalamnya akan dihapus permanen.`
-            : `Kategori "${deleting?.name}" akan dihapus permanen.`
+            ? t("category.deleteWithTasks", { name: deleting?.name, count: deletingCount })
+            : t("category.deleteEmpty", { name: deleting?.name })
         }
       />
     </>

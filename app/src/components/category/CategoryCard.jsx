@@ -2,8 +2,10 @@ import { Link } from "react-router-dom";
 import CategoryIconTile from "./CategoryIconTile";
 import IconButton from "../ui/IconButton";
 import { PencilIcon, TrashIcon } from "../ui/Icons";
+import useTranslation from "../../hooks/useTranslation";
 
 export default function CategoryCard({ category, taskCount, onEdit, onDelete }) {
+  const { t } = useTranslation();
   const href = `/categories/${category.id}`;
 
   return (
@@ -11,10 +13,10 @@ export default function CategoryCard({ category, taskCount, onEdit, onDelete }) 
       <div className="flex items-start justify-between gap-3">
         <CategoryIconTile icon={category.icon} color={category.color} />
         <div className="relative z-10 -mr-1 -mt-1 flex gap-0.5">
-          <IconButton tone="primary" onClick={() => onEdit(category)} aria-label={`Edit kategori ${category.name}`} className="p-1.5">
+          <IconButton tone="primary" onClick={() => onEdit(category)} aria-label={t("category.editAria", { name: category.name })} className="p-1.5">
             <PencilIcon size={16} />
           </IconButton>
-          <IconButton tone="danger" onClick={() => onDelete(category)} aria-label={`Hapus kategori ${category.name}`} className="p-1.5">
+          <IconButton tone="danger" onClick={() => onDelete(category)} aria-label={t("category.deleteAria", { name: category.name })} className="p-1.5">
             <TrashIcon size={16} />
           </IconButton>
         </div>
@@ -34,14 +36,14 @@ export default function CategoryCard({ category, taskCount, onEdit, onDelete }) 
       <div className="mt-auto flex flex-wrap items-center justify-between gap-3 pt-5">
         <span className="inline-flex items-center gap-1.5 text-sm font-semibold text-stone-900">
           <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
-          {taskCount} Task tersedia
+          {t("category.taskCount", { count: taskCount })}
         </span>
         <Link
           to={href}
           tabIndex={-1}
           className="relative z-10 rounded-lg bg-stone-950 px-4 py-1.5 text-sm font-medium text-white transition hover:bg-secondary-500 hover:text-stone-950 focus:outline-none"
         >
-          Open
+          {t("category.open")}
         </Link>
       </div>
     </article>

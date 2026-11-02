@@ -4,6 +4,7 @@ import { categoryService } from "../services/categoryService";
 import { taskService } from "../services/taskService";
 import { LOAD_STATUS } from "../constants/loadStatus";
 import useToast from "../hooks/useToast";
+import useTranslation from "../hooks/useTranslation";
 
 const reorder = (tasks, id, status, beforeId) => {
   const task = tasks.find((item) => item.id === id);
@@ -23,6 +24,7 @@ const reorder = (tasks, id, status, beforeId) => {
 
 export default function MemoProvider({ children }) {
   const toast = useToast();
+  const { t } = useTranslation();
   const [categories, setCategories] = useState([]);
   const [categoriesStatus, setCategoriesStatus] = useState(LOAD_STATUS.IDLE);
   const [categoriesError, setCategoriesError] = useState("");
@@ -66,10 +68,10 @@ export default function MemoProvider({ children }) {
 
   const resync = useCallback(
     (categoryId, error) => {
-      toast.error(`${error.message} Data dimuat ulang dari server.`);
+      toast.error(t("errors.resync", { message: error.message }));
       loadTasks(categoryId);
     },
-    [toast, loadTasks]
+    [toast, loadTasks, t]
   );
 
   const getCategory = useCallback((id) => categories.find((category) => category.id === id), [categories]);
@@ -78,20 +80,20 @@ export default function MemoProvider({ children }) {
     async (data) => {
       const category = await categoryService.create(data);
       setCategories((prev) => [...prev, category]);
-      toast.success(`Kategori "${category.name}" dibuat.`);
+      toast.success(t("category.created", { name: category.name }));
       return category;
     },
-    [toast]
+    [toast, t]
   );
 
   const updateCategory = useCallback(
     async (id, data) => {
       const category = await categoryService.update(id, data);
       setCategories((prev) => prev.map((item) => (item.id === id ? category : item)));
-      toast.success(`Kategori "${category.name}" diperbarui.`);
+      toast.success(t("category.updated", { name: category.name }));
       return category;
     },
-    [toast]
+    [toast, t]
   );
 
   const deleteCategory = useCallback(
@@ -104,9 +106,9 @@ export default function MemoProvider({ children }) {
         const { [id]: _removed, ...rest } = prev;
         return rest;
       });
-      toast.success(`Kategori "${category?.name ?? ""}" dihapus.`);
+      toast.success(t("category.deleted", { name: category?.name ?? "" }));
     },
-    [categories, toast]
+    [categories, toast, t]
   );
 
   const addTask = useCallback(async (categoryId, data) => {

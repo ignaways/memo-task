@@ -7,7 +7,9 @@ import Alert from "../components/ui/Alert";
 import Button from "../components/ui/Button";
 import Spinner from "../components/ui/Spinner";
 import ServerWakeHint from "../components/ui/ServerWakeHint";
+import LanguageSwitcher from "../components/ui/LanguageSwitcher";
 import useAuth from "../hooks/useAuth";
+import useTranslation from "../hooks/useTranslation";
 
 const DEMO = {
   email: import.meta.env.VITE_DEMO_EMAIL,
@@ -18,6 +20,7 @@ const linkClass = "rounded font-semibold text-primary-700 hover:underline focus:
 
 export default function LoginPage() {
   const { login } = useAuth();
+  const { t } = useTranslation();
   const [form, setForm] = useState({ email: "", password: "" });
   const [errors, setErrors] = useState({});
   const [message, setMessage] = useState("");
@@ -44,8 +47,8 @@ export default function LoginPage() {
   const handleSubmit = (event) => {
     event.preventDefault();
     const nextErrors = {};
-    if (!form.email.trim()) nextErrors.email = "Email wajib diisi.";
-    if (!form.password) nextErrors.password = "Password wajib diisi.";
+    if (!form.email.trim()) nextErrors.email = t("auth.login.emailRequired");
+    if (!form.password) nextErrors.password = t("auth.login.passwordRequired");
     if (Object.keys(nextErrors).length) {
       setErrors(nextErrors);
       return;
@@ -54,28 +57,29 @@ export default function LoginPage() {
   };
 
   const handleDemoAccount = () => {
-    setForm((prev) => ({
-      "email": "demo@memoboard.dev",
-      "password": "demo12345"
-    }))
-  }
+    setForm({
+      email: "demo@memoboard.dev",
+      password: "demo12345",
+    });
+  };
 
   return (
     <AuthCard
-      title="Masuk"
-      subtitle="Lanjutkan mengelola task kamu."
+      title={t("auth.login.title")}
+      subtitle={t("auth.login.subtitle")}
+      action={<LanguageSwitcher />}
       footer={
         <>
           <div>
-            Belum punya akun?{" "}
+            {t("auth.login.noAccount")}{" "}
             <Link to="/register" className={linkClass}>
-              Daftar sekarang
+              {t("auth.login.registerNow")}
             </Link>
           </div>
           <div>
-            Atau gunakan{" "}
+            {t("auth.login.orUse")}{" "}
             <span className={linkClass} onClick={handleDemoAccount}>
-              akun demo
+              {t("auth.login.demoAccount")}
             </span>
           </div>
         </>
@@ -84,7 +88,7 @@ export default function LoginPage() {
       <form onSubmit={handleSubmit} noValidate className="space-y-4">
         <Alert>{message}</Alert>
 
-        <FormField id="login-email" label="Email" error={errors.email}>
+        <FormField id="login-email" label={t("auth.email")} error={errors.email}>
           <input
             id="login-email"
             type="email"
@@ -92,12 +96,12 @@ export default function LoginPage() {
             value={form.email}
             onChange={setField("email")}
             aria-invalid={Boolean(errors.email)}
-            placeholder="nama@email.com"
+            placeholder={t("auth.emailPlaceholder")}
             className={`${inputClass} ${errors.email ? "border-rose-400" : ""}`}
           />
         </FormField>
 
-        <FormField id="login-password" label="Password" error={errors.password}>
+        <FormField id="login-password" label={t("auth.password")} error={errors.password}>
           <PasswordInput
             id="login-password"
             autoComplete="current-password"
@@ -110,7 +114,7 @@ export default function LoginPage() {
 
         <Button type="submit" className="w-full" disabled={submitting}>
           {submitting && <Spinner size={16} />}
-          {submitting ? "Memproses..." : "Masuk"}
+          {submitting ? t("auth.login.submitting") : t("auth.login.submit")}
         </Button>
 
         {DEMO.email && DEMO.password && (
@@ -120,7 +124,7 @@ export default function LoginPage() {
             disabled={submitting}
             onClick={() => submit({ email: DEMO.email, password: DEMO.password })}
           >
-            Masuk dengan akun demo
+            {t("auth.login.demoButton")}
           </Button>
         )}
 

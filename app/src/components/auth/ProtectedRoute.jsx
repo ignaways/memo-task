@@ -4,18 +4,20 @@ import ErrorState from "../ui/ErrorState";
 import MemoProvider from "../../context/MemoProvider";
 import { AUTH_STATUS } from "../../context/AuthProvider";
 import useAuth from "../../hooks/useAuth";
+import useTranslation from "../../hooks/useTranslation";
 
 export default function ProtectedRoute() {
   const { user, status, retry } = useAuth();
   const location = useLocation();
+  const { t } = useTranslation();
 
-  if (status === AUTH_STATUS.CHECKING) return <FullPageLoader label="Memeriksa sesi..." />;
+  if (status === AUTH_STATUS.CHECKING) return <FullPageLoader label={t("common.checkingSession")} />;
 
   if (status === AUTH_STATUS.ERROR) {
     return (
       <ErrorState
-        title="Tidak dapat terhubung ke server"
-        message="Server belum bisa dihubungi. Pastikan koneksi internet kamu aktif, lalu coba lagi."
+        title={t("auth.serverUnreachableTitle")}
+        message={t("auth.serverUnreachableMessage")}
         onRetry={retry}
       />
     );

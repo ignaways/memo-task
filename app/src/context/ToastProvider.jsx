@@ -1,6 +1,7 @@
 import { useCallback, useMemo, useRef, useState } from "react";
 import { ToastContext } from "./ToastContext";
 import { CloseIcon } from "../components/ui/Icons";
+import useTranslation from "../hooks/useTranslation";
 
 const DURATION = 4500;
 
@@ -17,6 +18,7 @@ const DOTS = {
 };
 
 export default function ToastProvider({ children }) {
+  const { t } = useTranslation();
   const [toasts, setToasts] = useState([]);
   const counter = useRef(0);
 
@@ -61,7 +63,7 @@ export default function ToastProvider({ children }) {
             <button
               type="button"
               onClick={() => dismiss(toast.id)}
-              aria-label="Tutup notifikasi"
+              aria-label={t("toast.close")}
               className="rounded p-0.5 text-stone-400 hover:text-stone-600 focus:outline-none focus-visible:ring-2 focus-visible:ring-secondary-400"
             >
               <CloseIcon />

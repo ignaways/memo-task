@@ -1,7 +1,9 @@
 import { BRAND } from "../../constants/brand";
 import { MailIcon, SOCIAL_ICONS } from "../ui/Icons";
+import useTranslation from "../../hooks/useTranslation";
 
 export default function Footer() {
+  const { t } = useTranslation();
   const year = new Date().getFullYear();
 
   return (
@@ -45,7 +47,7 @@ export default function Footer() {
 
       <div className="border-t border-primary-700 bg-primary-900">
         <p className="mx-auto max-w-6xl px-4 py-4 text-xs text-primary-300 sm:px-6">
-          &copy; {year} {BRAND.name}. All rights reserved.
+          &copy; {year} {BRAND.name}. {t("footer.rights")}
         </p>
       </div>
     </footer>

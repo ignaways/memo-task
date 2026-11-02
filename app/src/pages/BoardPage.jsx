@@ -5,9 +5,11 @@ import ErrorState from "../components/ui/ErrorState";
 import NotFoundPage from "./NotFoundPage";
 import { LOAD_STATUS } from "../constants/loadStatus";
 import useMemoStore from "../hooks/useMemoStore";
+import useTranslation from "../hooks/useTranslation";
 
 export default function BoardPage() {
   const { categoryId } = useParams();
+  const { t } = useTranslation();
   const { getCategory, categoriesStatus, categoriesError, loadCategories } = useMemoStore();
   const category = getCategory(categoryId);
 
@@ -24,7 +26,7 @@ export default function BoardPage() {
     );
   }
 
-  if (!category) return <NotFoundPage message="Kategori yang kamu cari tidak ditemukan." />;
+  if (!category) return <NotFoundPage message={t("notFound.category")} />;
 
   return <CategoryBoard key={category.id} category={category} />;
 }

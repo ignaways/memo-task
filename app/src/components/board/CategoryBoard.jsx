@@ -14,6 +14,7 @@ import { LOAD_STATUS } from "../../constants/loadStatus";
 import useMemoStore from "../../hooks/useMemoStore";
 import useCategoryTasks from "../../hooks/useCategoryTasks";
 import useTagFilter from "../../hooks/useTagFilter";
+import useTranslation from "../../hooks/useTranslation";
 
 const CLOSED_MODAL = { open: false, task: null };
 
@@ -22,6 +23,7 @@ export default function CategoryBoard({ category }) {
   const { tasks, allTags, stats, status, error, reload } = useCategoryTasks(category.id);
   const filter = useTagFilter(tasks, allTags);
   const [modal, setModal] = useState(CLOSED_MODAL);
+  const { t } = useTranslation();
 
   const isLoading = status === LOAD_STATUS.LOADING;
   const openCreate = () => setModal({ open: true, task: null });
@@ -84,7 +86,7 @@ export default function CategoryBoard({ category }) {
         className="mb-4 inline-flex items-center gap-1.5 rounded text-sm font-medium text-stone-500 transition hover:text-primary-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-secondary-400"
       >
         <ArrowLeftIcon />
-        Kembali ke Category
+        {t("board.back")}
       </Link>
 
       <PageHeader
@@ -93,7 +95,7 @@ export default function CategoryBoard({ category }) {
         action={
           <Button onClick={openCreate} disabled={isLoading || status === LOAD_STATUS.ERROR}>
             <PlusIcon />
-            Add Task
+            {t("board.addTask")}
           </Button>
         }
       />

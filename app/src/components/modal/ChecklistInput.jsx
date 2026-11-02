@@ -3,8 +3,10 @@ import Button from "../ui/Button";
 import IconButton from "../ui/IconButton";
 import { CloseIcon } from "../ui/Icons";
 import { createId } from "../../utils/id";
+import useTranslation from "../../hooks/useTranslation";
 
 export default function ChecklistInput({ id, items, onChange }) {
+  const { t } = useTranslation();
   const [value, setValue] = useState("");
 
   const addItem = () => {
@@ -29,18 +31,18 @@ export default function ChecklistInput({ id, items, onChange }) {
                 type="checkbox"
                 checked={item.done}
                 onChange={() => updateItem(item.id, { done: !item.done })}
-                aria-label={`Tandai ${item.text}`}
+                aria-label={t("task.checklistMark", { text: item.text })}
                 className="h-4 w-4 shrink-0 accent-primary-700"
               />
               <input
                 value={item.text}
                 onChange={(event) => updateItem(item.id, { text: event.target.value })}
-                aria-label="Teks checklist"
+                aria-label={t("task.checklistText")}
                 className={`min-w-0 flex-1 bg-transparent text-sm outline-none ${
                   item.done ? "text-stone-400 line-through" : "text-stone-800"
                 }`}
               />
-              <IconButton tone="danger" onClick={() => removeItem(item.id)} aria-label={`Hapus ${item.text}`}>
+              <IconButton tone="danger" onClick={() => removeItem(item.id)} aria-label={t("task.checklistRemove", { text: item.text })}>
                 <CloseIcon />
               </IconButton>
             </li>
@@ -59,11 +61,11 @@ export default function ChecklistInput({ id, items, onChange }) {
               addItem();
             }
           }}
-          placeholder="Tambah item to do"
+          placeholder={t("task.checklistPlaceholder")}
           className="min-w-0 flex-1 rounded-lg border border-stone-300 px-3 py-2 text-sm text-stone-900 outline-none transition focus:border-primary-500 focus:ring-2 focus:ring-primary-200"
         />
         <Button variant="outline" onClick={addItem} disabled={!value.trim()}>
-          Tambah
+          {t("task.checklistAdd")}
         </Button>
       </div>
     </div>

@@ -8,6 +8,7 @@ import Alert from "../ui/Alert";
 import Button from "../ui/Button";
 import Spinner from "../ui/Spinner";
 import { PRIORITY } from "../../constants/priorities";
+import useTranslation from "../../hooks/useTranslation";
 
 const EMPTY_FORM = {
   title: "",
@@ -31,6 +32,7 @@ const toForm = (task) =>
     : EMPTY_FORM;
 
 export default function TaskModal({ open, task, onClose, onSubmit, tagSuggestions }) {
+  const { t } = useTranslation();
   const [form, setForm] = useState(EMPTY_FORM);
   const [errors, setErrors] = useState({});
   const [message, setMessage] = useState("");
@@ -53,7 +55,7 @@ export default function TaskModal({ open, task, onClose, onSubmit, tagSuggestion
   const handleSubmit = async (event) => {
     event.preventDefault();
     if (!form.title.trim()) {
-      setErrors({ title: "Title wajib diisi." });
+      setErrors({ title: t("task.titleRequired") });
       titleRef.current?.focus();
       return;
     }
@@ -81,13 +83,13 @@ export default function TaskModal({ open, task, onClose, onSubmit, tagSuggestion
       open={open}
       onClose={onClose}
       size="lg"
-      title={isEdit ? "Edit task" : "Task baru"}
-      subtitle={isEdit ? "Perbarui detail task." : "Task baru akan masuk ke kolom New."}
+      title={isEdit ? t("task.editTitle") : t("task.newTitle")}
+      subtitle={isEdit ? t("task.editSubtitle") : t("task.newSubtitle")}
     >
       <form onSubmit={handleSubmit} noValidate className="mt-5 space-y-4">
         <Alert>{message}</Alert>
 
-        <FormField id="task-title" label="Title" error={errors.title}>
+        <FormField id="task-title" label={t("task.title")} error={errors.title}>
           <input
             id="task-title"
             ref={titleRef}
@@ -97,30 +99,30 @@ export default function TaskModal({ open, task, onClose, onSubmit, tagSuggestion
               setField("title")(event.target.value);
               if (errors.title) setErrors((prev) => ({ ...prev, title: undefined }));
             }}
-            placeholder="Contoh: Review pull request"
+            placeholder={t("task.titlePlaceholder")}
             aria-invalid={Boolean(errors.title)}
             className={`${inputClass} ${errors.title ? "border-rose-400" : ""}`}
           />
         </FormField>
 
-        <FormField id="task-description" label="Description" hint="(opsional)" error={errors.description}>
+        <FormField id="task-description" label={t("task.description")} hint={t("common.optional")} error={errors.description}>
           <textarea
             id="task-description"
             rows={3}
             maxLength={2000}
             value={form.description}
             onChange={(event) => setField("description")(event.target.value)}
-            placeholder="Detail task"
+            placeholder={t("task.descriptionPlaceholder")}
             className={`${inputClass} resize-none`}
           />
         </FormField>
 
         <div className="grid gap-4 sm:grid-cols-2">
-          <FormField id="task-priority" label="Priority" error={errors.priority}>
+          <FormField id="task-priority" label={t("task.priority")} error={errors.priority}>
             <PrioritySelect id="task-priority" value={form.priority} onChange={setField("priority")} />
           </FormField>
 
-          <FormField id="task-deadline" label="Deadline" hint="(opsional)" error={errors.deadline}>
+          <FormField id="task-deadline" label={t("task.deadline")} hint={t("common.optional")} error={errors.deadline}>
             <input
               id="task-deadline"
               type="date"
@@ -131,21 +133,21 @@ export default function TaskModal({ open, task, onClose, onSubmit, tagSuggestion
           </FormField>
         </div>
 
-        <FormField id="task-tags" label="Tags" hint="(opsional)" error={errors.tags}>
+        <FormField id="task-tags" label={t("task.tags")} hint={t("common.optional")} error={errors.tags}>
           <TagInput id="task-tags" tags={form.tags} onChange={setField("tags")} suggestions={tagSuggestions} />
         </FormField>
 
-        <FormField id="task-checklist" label="Checklist to do" hint="(opsional)" error={errors.checklist}>
+        <FormField id="task-checklist" label={t("task.checklist")} hint={t("common.optional")} error={errors.checklist}>
           <ChecklistInput id="task-checklist" items={form.checklist} onChange={setField("checklist")} />
         </FormField>
 
         <div className="flex justify-end gap-2 pt-2">
           <Button variant="ghost" onClick={onClose}>
-            Batal
+            {t("common.cancel")}
           </Button>
           <Button type="submit" disabled={saving}>
             {saving && <Spinner size={16} />}
-            {saving ? "Menyimpan..." : isEdit ? "Simpan perubahan" : "Simpan task"}
+            {saving ? t("common.saving") : isEdit ? t("common.saveChanges") : t("task.save")}
           </Button>
         </div>
       </form>
